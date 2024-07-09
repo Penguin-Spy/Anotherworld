@@ -1,0 +1,20 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+      {
+          "name": "Launch Debug",
+          "type": "coreclr",
+          "request": "launch",
+          "program": "${config:tModLoaderPath}/tModLoader.dll",
+          "args": ["-eac"],
+          "cwd": "${config:tModLoaderPath}",
+          "requireExactSource": false,
+          "justMyCode": false,
+          "preLaunchTask": "build", // make sure the mod is up-to-date before launching
+          "suppressJITOptimizations": false, // true, if the debugger is skipping lines or otherwise acting weirdly, will probably slow down the game significantly
+      }
+  ]
+}
