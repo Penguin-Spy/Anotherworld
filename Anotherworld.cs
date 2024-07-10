@@ -72,12 +72,27 @@ namespace Anotherworld {
 			progress.Message = "generating things :)";
 			int centerX = Main.maxTilesX / 2;
 			int centerY = (int)(Main.maxTilesY * 0.3);
-			WorldUtils.Gen(new Point(centerX, centerY), new Shapes.Rectangle(14, 8), new Actions.SetTile(TileID.GrayBrick));
+			// spawn room
+			GenerateRoom(new Point(centerX, centerY), false);
+			progress.Set(0.1f);
+
+			for (int x = 1; x <= 4; x++) {
+				progress.Set(0.1f * (x + 1));
+				GenerateRoom(new Point(centerX + x * 17, centerY), true);
+			}
 
 			Main.spawnTileX = centerX;
 			Main.spawnTileY = centerY - 5;
+		}
 
-			progress.Set(0.4f);
+		private static void GenerateRoom(Point p, bool door) {
+			WorldUtils.Gen(p, new Shapes.Rectangle(18, 12), new Actions.SetTile(TileID.GrayBrick));
+			WorldUtils.Gen(new Point(p.X + 1, p.Y + 1), new Shapes.Rectangle(16, 10), new Actions.ClearTile());
+			Main.tile[p.X + 1, p.Y + 6].ResetToType(TileID.Torches);
+			Main.tile[p.X + 16, p.Y + 6].ResetToType(TileID.Torches);
+			if (door) {
+				WorldGen.PlaceDoor(p.X + 17, p.Y + 9, 10, 0);
+			}
 		}
 	}
 }
